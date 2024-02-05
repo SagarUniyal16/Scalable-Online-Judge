@@ -1,5 +1,5 @@
 import React from "react";
-import "../../public/Login.css";
+import "../Login/Login.css";
 export default function Login() {
   return (
     <div className="form-container">
