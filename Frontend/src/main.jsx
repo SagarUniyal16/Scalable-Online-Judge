@@ -1,27 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Layout from './Layout';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import"../public/index.css";
 
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-    <Route path='/' element={<Layout />}/>
-    </> 
-    
-  )
-)
-
-
+import { RouterProvider } from 'react-router-dom'
+import routes from './Components/App'
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router = {router} />
-  </React.StrictMode>,
+  <React.StrictMode><RouterProvider router={routes}></RouterProvider></React.StrictMode>
 )
