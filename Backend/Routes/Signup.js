@@ -11,6 +11,7 @@ signupRouter.post('/', (req, res)=>{
         if(user){
             res.json("Already registered")
         }
+        
         else{
             User.create(req.body)
             .then(log_reg_form => res.json(log_reg_form))

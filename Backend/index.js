@@ -3,7 +3,6 @@ import express from "express";
 import mongoose from 'mongoose';
 import dotenv from "dotenv";
 
-import loginRouter from "./Routes/login.js"
 import signupRouter from "./Routes/Signup.js";
 
 
@@ -17,13 +16,13 @@ app.use(cors());
 
 mongoose.connect(process.env.MONGO_URL);
 
+
 app.use("/signup",signupRouter);
 
 app.use("/login",loginRouter);
 
 
-
 app.listen(port, () => {
-    console.log("Servaer listining on Port ");
+    console.log("Server listining on Port ");
 
 });
