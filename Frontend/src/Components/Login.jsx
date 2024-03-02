@@ -1,75 +1,94 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { loginSchema } from "./validation/loginSchema.jsx";
 import { useNavigate } from 'react-router-dom';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import {useDispatch} from "react-redux";
+import { login } from "../../utils/Store/userSlice.js";
+import { useFormik } from "formik";
 
-const Login = () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+export default function Login() {
     const navigate = useNavigate();
+    const dispatch=useDispatch();
+    const initialUserData = {
+      userName: "",
+      password: "",
+    };
+  
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+      useFormik({
+        initialValues: initialUserData,
+        validationSchema: loginSchema,
+        onSubmit: async (values, action) => {
+          try {
+            const response = await axios.post("http://localhost:3001/login", {
+              values,
+            });
+            console.log(response);
+            dispatch(login(response.data.userName));
+            navigate("/");
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      });
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        axios.post( 'http://localhost:3001/login', {email, password})
-        .then(result => {
-            console.log(result);
-            if(result.data === "Success"){
-                console.log("Login Success");
-                alert('Login successful!')
-                navigate('/');
-            }
-            else{
-                alert('Incorrect password! Please try again.');
-            }
-        })
-        .catch(err => console.log(err));
-    }
+      return (
 
-
-    return (
-        <div>
-            <div className="d-flex justify-content-center align-items-center text-center vh-100" style= {{backgroundImage : "linear-gradient(#00d5ff,#0095ff,rgba(93,0,255,.555))"}}>
-                <div className="bg-white p-3 rounded" style={{width : '40%'}}>
-                    <h2 className='mb-3 text-primary'>Login</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3 text-start">
-                            <label htmlFor="exampleInputEmail1" className="form-label">
-                                <strong>Email Id</strong>
-                            </label>
-                            <input 
-                                type="email" 
-                                placeholder="Enter Email"
-                                className="form-control" 
-                                id="exampleInputEmail1" 
-                                onChange={(event) => setEmail(event.target.value)}
-                                required
-                            /> 
-                        </div>
-                        <div className="mb-3 text-start">
-                            <label htmlFor="exampleInputPassword1" className="form-label">
-                                <strong>Password</strong>
-                            </label>
-                            <input 
-                                type="password" 
-                                placeholder="Enter Password"
-                                className="form-control" 
-                                id="exampleInputPassword1" 
-                                onChange={(event) => setPassword(event.target.value)}
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary">Login</button>
-                    </form>
-                    {/* TO add ' appostopee */}
-                    <p className='container my-2'>Don&apos;t have an account?</p>
-                    <Link to='/register' className="btn btn-secondary">Register</Link>
-                </div>
-            </div>
+    <div className="d-flex justify-content-center align-items-center text-center vh-100" style= {{backgroundImage : "linear-gradient(#00d5ff,#0095ff,rgba(93,0,255,.555))"}}>
+          <div className="bg-white p-3 rounded" style={{width : '40%'}}>
+        <Container>
+          <Row className="justify-content-center">
+          <h2 className='mb-3 text-primary mb-4'>Login</h2>
+            <Col xs={12} md={6}>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Username or Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="userName"
+                    placeholder="Enter username or email"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.userName}
+                    isInvalid={errors.userName && touched.userName}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.userName}
+                  </Form.Control.Feedback>
+                </Form.Group>
+    
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Label className='mt-2'>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isInvalid={errors.password && touched.password}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                </Form.Group>
+    
+                <Button variant="primary" type="submit" className="my-2">
+                  Sign in
+                </Button>
+              </Form>
+    
+              <p className="mt-3">
+                New here? <Link to="/register">Signup</Link>
+              </p>
+            </Col>
+          </Row>
+        </Container>
         </div>
-    )
+        </div>
+      );
 }
 
-export default Login

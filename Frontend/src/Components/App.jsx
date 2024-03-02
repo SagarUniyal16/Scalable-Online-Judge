@@ -8,16 +8,21 @@ import Footer from "./Footer";
 import Leaderboard from "./Leaderboard";
 import Error from "./Error";
 import Register from "./Register";
+import { Provider } from "react-redux";
+import appStore from "../../utils/Store/appStore";
 
- function App() {
+function App() {
   return (
     <div>
+      <Provider store={appStore}>
       <Header />
       <Outlet/>
         <Footer/>
+        </Provider>
     </div>
   );
 }
+
 
  const routes = createBrowserRouter([
   {

@@ -1,89 +1,116 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from "formik";
+import { SignupSchema } from "./validation/signupSchema.jsx";
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const Register = () => {
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const navigate = useNavigate();
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        axios.post( 'http://localhost:3001/register', {name, email, password})
-        .then(result => {
-            console.log(result);
-            if(result.data === "Already registered"){
-                alert("E-mail already registered! Please Login to proceed.");
-                navigate('/login');
-            }
-            else{
-                alert("Registered successfully! Please Login to proceed.")
-                navigate('/login');
-            }
-            
-        })
-        .catch(err => console.log(err));
-    }
-
-
+    const navigate=useNavigate();
+    const initialUserData = {
+      userName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
+  
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+      useFormik({
+        initialValues: initialUserData,
+        validationSchema: SignupSchema,
+        onSubmit: async (values, action) => {
+          try {
+            const response = await axios.post("http://localhost:3001/register", {
+              values,
+            });
+            console.log(response);
+            navigate("/login");
+          } catch (e) {
+            console.log(e);
+          }
+        },
+      });
+  
     return (
-        <div>
-            <div className="d-flex justify-content-center align-items-center text-center vh-100" style= {{backgroundImage : "linear-gradient(#00d5ff,#0095ff,rgba(93,0,255,.555))"}}>
-                <div className="bg-white p-3 rounded" style={{width : '40%'}}>
-                    <h2 className='mb-3 text-primary'>Register</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3 text-start">
-                            <label htmlFor="exampleInputEmail1" className="form-label">
-                                <strong >Name</strong>
-                            </label>
-                            <input 
-                                type="text"
-                                placeholder="Enter Name"
-                                className="form-control" 
-                                id="exampleInputname" 
-                                onChange={(event) => setName(event.target.value)}
-                                required
-                            /> 
-                        </div>
-                        <div className="mb-3 text-start">
-                            <label htmlFor="exampleInputEmail1" className="form-label">
-                                <strong>Email Id</strong>
-                            </label>
-                            <input 
-                                type="email" 
-                                placeholder="Enter Email"
-                                className="form-control" 
-                                id="exampleInputEmail1" 
-                                onChange={(event) => setEmail(event.target.value)}
-                                required
-                            /> 
-                        </div>
-                        <div className="mb-3 text-start">
-                            <label htmlFor="exampleInputPassword1" className="form-label">
-                                <strong>Password</strong>
-                            </label>
-                            <input 
-                                type="password" 
-                                placeholder="Enter Password"
-                                className="form-control" 
-                                id="exampleInputPassword1" 
-                                onChange={(event) => setPassword(event.target.value)}
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary">Register</button>
-                    </form>
-
-                    <p className='container my-2'>Already have an account ?</p>
-                    <Link to='/login' className="btn btn-secondary">Login</Link>
-                </div>
-            </div>
-        </div>
-    )
-}
+        <div className="d-flex justify-content-center align-items-center text-center vh-100" style= {{backgroundImage : "linear-gradient(#00d5ff,#0095ff,rgba(93,0,255,.555))"}}>
+//        <div className="bg-white p-3 rounded" style={{width : '40%'}}>
+      <Container>
+      <h2 className='mb-3 text-primary mb-4'>Signup</h2>
+        <Row className="justify-content-center my-6">
+          <Col md={6}>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="userName">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter username"
+                  name="userName"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.userName}
+                  isInvalid={errors.userName && touched.userName}
+                />
+                <Form.Control.Feedback type="invalid">{errors.userName}</Form.Control.Feedback>
+              </Form.Group>
+  
+              <Form.Group controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  isInvalid={errors.email && touched.email}
+                />
+                <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+              </Form.Group>
+  
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  isInvalid={errors.password && touched.password}
+                />
+                <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+              </Form.Group>
+  
+              <Form.Group controlId="confirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm password"
+                  name="confirmPassword"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.confirmPassword}
+                  isInvalid={errors.confirmPassword && touched.confirmPassword}
+                />
+                <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
+              </Form.Group>
+  
+              <Button variant="primary" type="submit" className="w-100 my-4">
+                Sign up
+              </Button>
+  
+              <p>
+                Have an account? <Link to="/login">Sign in</Link>
+              </p>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+      </div>
+      </div>
+    );
+  };
+  
 
 export default Register

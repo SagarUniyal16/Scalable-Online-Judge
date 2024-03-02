@@ -2,26 +2,27 @@ import { Router } from "express";
 import User from "../Models/user.model.js";
 const loginRouter = Router();
 
-loginRouter.post('/', (req, res)=>{
-    // To find record from the database
-    const {email, password} = req.body;
-    User.findOne({email: email})
-    .then(user => {
-        if(user){
-            // If user found then these 2 cases
-            if(user.password === password) {
-                res.json("Success");
-            }
-            else{
-                res.json("Wrong password");
-            }
-        }
-        // If user not found then 
-        else{
-            res.json("No records found! ");
-        }
-    })
-})
+loginRouter.post("/", async (req, res) => {
+    const { userName, password } = req.body.values;
+  
+    const isUserExist = await User.findOne({ userName: userName });
+  
+    if (isUserExist) {
+      const isPasswordCorrect = await isUserExist.isPasswordCorrect(password);
+      if (isPasswordCorrect) {
+          return res
+          .status(200)
+          .json({ userName, message: "logged in successfully" });z
+      } else {
+        res.status(400).json({ message: "Please check your password" });
+      }
+    } else {
+      res
+        .status(401)
+        .json({ message: "Invalid user please check your username or password" });
+    }
+  });
+  
 
 
 export default loginRouter;
