@@ -31,14 +31,11 @@ export default function Header() {
         </Link>
       </Navbar.Brand>
       <Nav className="ml-auto">
-        <Nav.Link as={NavLink} to="/" className="mx-3 text-white text-decoration-none" activeClassName="active">
+        <Nav.Link as={NavLink} to="/" className="mx-3 text-white text-decoration-none" activeclassname="active">
           Dashboard
         </Nav.Link>
-        <Nav.Link as={NavLink} to="/problems" className="mx-3 text-white text-decoration-none" activeClassName="active">
+        <Nav.Link as={NavLink} to="/problems" className="mx-3 text-white text-decoration-none" activeclassname="active">
           Problems
-        </Nav.Link>
-        <Nav.Link as={NavLink} to="/leaderboard" className="mx-3 text-white text-decoration-none" activeClassName="active">
-          Leaderboard
         </Nav.Link>
         {user ? (
           <Dropdown show={isDropdownOpen} onClick={toggleDropdown}>
@@ -56,7 +53,7 @@ export default function Header() {
             </Dropdown.Menu>
           </Dropdown>
         ) : (
-          <Nav.Link as={NavLink} to="/login" className="text-white text-decoration-none" activeClassName="active">
+          <Nav.Link as={NavLink} to="/login" className="text-white text-decoration-none" activeclassname="active">
             Login
           </Nav.Link>
         )}

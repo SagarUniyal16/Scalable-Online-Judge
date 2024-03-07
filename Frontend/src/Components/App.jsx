@@ -10,6 +10,7 @@ import Error from "./Error";
 import Register from "./Register";
 import { Provider } from "react-redux";
 import appStore from "../../utils/Store/appStore";
+import PostProblems from "./PostProblems";
 
 function App() {
   return (
@@ -45,6 +46,9 @@ function App() {
       {
         path:"/register",
         element:<Register/>
+      },{
+        path:"/addproblem",
+        element:<PostProblems/>
       }
 
     ]

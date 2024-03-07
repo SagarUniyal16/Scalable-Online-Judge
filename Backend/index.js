@@ -4,9 +4,11 @@ import cors from "cors";
 
 import dotenv from "dotenv";
 
-import loginRouter from "./Routes/Login.js"
+import loginRouter from "./Routes/login.js"
 
 import signupRouter from "./Routes/Signup.js";
+
+import problemRouter from "./Routes/Problem.js";
 
 import { urlencoded } from "express";
 
@@ -26,6 +28,7 @@ app.use("/login",loginRouter);
 
 app.use("/register",signupRouter);
 
+app.use("/problem",problemRouter);
 
 
 app.listen(PORT, () => {
