@@ -11,6 +11,9 @@ import Register from "./Register";
 import { Provider } from "react-redux";
 import appStore from "../../utils/Store/appStore";
 import PostProblems from "./PostProblems";
+import { lazy, Suspense } from "react";
+
+const Problems=lazy(()=>import("./Problems"));
 
 function App() {
   return (
@@ -49,6 +52,14 @@ function App() {
       },{
         path:"/addproblem",
         element:<PostProblems/>
+      },
+      {
+        path:"/problems",
+
+        element:(
+          <Suspense fallback={<h1>Loading...</h1>}>
+           <Problems/>
+        </Suspense>)
       }
 
     ]

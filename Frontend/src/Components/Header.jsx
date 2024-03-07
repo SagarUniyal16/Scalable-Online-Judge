@@ -48,8 +48,8 @@ export default function Header() {
               />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item>{user}</Dropdown.Item>
-              <Dropdown.Item onClick={logoutHandler}>Sign Out</Dropdown.Item>
+              <Dropdown.Item>Hi, {user}</Dropdown.Item>
+              <Dropdown.Item onClick={logoutHandler}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         ) : (

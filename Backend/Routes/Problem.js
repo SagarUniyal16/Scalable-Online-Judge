@@ -22,5 +22,18 @@ problemRouter.post("/",async(req,res)=>{
     
 })
 
+problemRouter.get("/",async(req,res)=>{
+    try{
+        const allProblems=await Problem.find({});
+        res.send(allProblems);
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.send("Something wrong with the database");
+    }
+    
+    
+})
 
 export default problemRouter;
