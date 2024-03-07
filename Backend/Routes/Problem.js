@@ -36,4 +36,25 @@ problemRouter.get("/",async(req,res)=>{
     
 })
 
+problemRouter.get("/:id",async(req,res)=>{
+    const probId=req.params.id;
+    
+    try{
+    const problem=await Problem.findOne({_id:probId});
+   
+    res.status(200).json({
+        msg:"success",problemDetails:problem
+    })
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(200).json({
+            msg:"Failed",error:error
+        })
+    }
+
+  
+  })
+  
 export default problemRouter;

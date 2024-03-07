@@ -15,6 +15,8 @@ import { lazy, Suspense } from "react";
 
 const Problems=lazy(()=>import("./Problems"));
 
+const GetProblem=lazy(()=>import("./GetProblem"));
+
 function App() {
   return (
     <div>
@@ -60,6 +62,14 @@ function App() {
           <Suspense fallback={<h1>Loading...</h1>}>
            <Problems/>
         </Suspense>)
+      },
+      {
+        path:"/problem/:problemId",
+        element:(
+        <Suspense fallback={<h1>Loading...</h1>}>
+        <GetProblem/>
+        </Suspense>
+        )
       }
 
     ]
