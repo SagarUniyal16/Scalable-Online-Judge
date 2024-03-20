@@ -12,7 +12,7 @@ loginRouter.post("/", async (req, res) => {
       if (isPasswordCorrect) {
           return res
           .status(200)
-          .json({ userName, message: "logged in successfully" });z
+          .json({ userName, message: "logged in successfully" });
       } else {
         res.status(400).json({ message: "Please check your password" });
       }

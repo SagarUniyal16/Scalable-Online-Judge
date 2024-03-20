@@ -14,7 +14,7 @@ const Problems = () => {
 
   const fetchProblems = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/problem");
+      const response = await axios.get("http://localhost:3002/problem");
       setProblems(response.data);
     } catch (error) {
       console.error("Error fetching problems:", error);
@@ -39,9 +39,14 @@ const Problems = () => {
       ))}
     </Container>
   ) : (
-    <div className="font-bold text-3xl p-6">
-      Please log in to access the problem list.
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="font-bold text-3xl p-6">
+            Please log in to access the problem list.
+        </div>
+        {/* You can add additional content or login button here */}
     </div>
+</div>
   );
 };
 

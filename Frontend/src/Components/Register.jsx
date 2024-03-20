@@ -21,7 +21,7 @@ const Register = () => {
         validationSchema: SignupSchema,
         onSubmit: async (values, action) => {
           try {
-            const response = await axios.post("http://localhost:3001/register", {
+            const response = await axios.post("http://localhost:3002/register", {
               values,
             });
             console.log(response);
@@ -34,7 +34,7 @@ const Register = () => {
   
     return (
         <div className="d-flex justify-content-center align-items-center text-center vh-100" style= {{backgroundImage : "linear-gradient(#00d5ff,#0095ff,rgba(93,0,255,.555))"}}>
-//        <div className="bg-white p-3 rounded" style={{width : '40%'}}>
+      <div className="bg-white p-3 rounded" style={{width : '40%'}}>
       <Container>
       <h2 className='mb-3 text-primary mb-4'>Signup</h2>
         <Row className="justify-content-center my-6">

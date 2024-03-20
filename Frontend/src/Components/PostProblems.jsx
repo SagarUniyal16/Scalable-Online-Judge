@@ -10,7 +10,7 @@ const PostProblems = () => {
 
   const clickHandler = async () => {
     try {
-      const response = await axios.post("http://localhost:3001/problem", {
+      const response = await axios.post("http://localhost:3002/problem", {
         problemName,
         problemStatement,
         difficultyLevel,
