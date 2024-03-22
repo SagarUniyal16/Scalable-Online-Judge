@@ -23,19 +23,24 @@ function GetProblem() {
     setProblemStatement(Statement);
   };
 
-  const difficultyColor = () => {
-    const difficulty = problemDifficulty.toUpperCase();
-    if (difficulty === 'EASY') return 'text-green-700';
-    if (difficulty === 'HARD') return 'text-red-700';
-    return 'text-yellow-700';
-  };
+  const difficulty =problemDifficulty.toUpperCase();
+    let textColor = "";
+    if (difficulty == "EASY") {
+      textColor = "text-green-700";
+    } else if(difficulty=="HARD"){
+      textColor = "text-red-700";
+    }
+    else{
+      textColor="text-yellow-700"
+    }
+    console.log(textColor);
 
   return (
     <div className="container mx-auto flex justify-center items-start">
       <div className="w-full md:w-9/12 p-4 md:p-8 border border-gray-300 rounded-lg shadow-lg my-8" style={{ minHeight: '500px' }}> {/* Adjust the minHeight */}
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold">{problemName}</h2>
-          <div className={`border-2 rounded-md p-2 ${difficultyColor()}`}>{problemDifficulty.toUpperCase()}</div>
+          <div className={`border-2 rounded-md p-2 ${textColor}`}>{difficulty.toUpperCase()}</div>
         </div>
         <p className="text-lg mt-4">{problemStatement}</p>
       </div>

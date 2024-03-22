@@ -19,7 +19,7 @@ const PORT = process.env.PORT;
 dotenv.config();
 
 app.use(cors());
-
+ 
 app.use(express.json());
 app.use(urlencoded({extended:true}));
 
