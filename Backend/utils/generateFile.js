@@ -13,7 +13,7 @@ if (!fs.existsSync(codesDir)) {
   fs.mkdirSync(codesDir, { recursive: true });
 }
 
-export const generateFile = async (language, code) => {
+ const generateFile = async (language, code) => {
   const languageDir = path.join(codesDir, language);
   if (!fs.existsSync(languageDir)) {
     fs.mkdirSync(languageDir, { recursive: true });
@@ -25,3 +25,5 @@ export const generateFile = async (language, code) => {
   await fs.writeFileSync(filePath, code);
   return filePath;
 };
+
+export default generateFile;

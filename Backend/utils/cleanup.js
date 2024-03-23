@@ -6,7 +6,7 @@ import { exec } from "child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outputDirPath = path.join(__dirname, "outputs");
-export const cleanup = () => {
+ const cleanup = () => {
   return new Promise((resolve, reject) => {
     exec(`rmdir /s /q "${outputDirPath}"`, (error, stderr, stdout) => {
       if (error) {
@@ -19,3 +19,5 @@ export const cleanup = () => {
     });
   });
 };
+
+export default cleanup;

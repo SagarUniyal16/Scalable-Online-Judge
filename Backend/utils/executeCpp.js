@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { exec, spawn } from "child_process";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export const executeCpp = async (filePath, inputs) => {
+const executeCpp = async (filePath, inputs) => {
   const outputDirPath = path.join(__dirname, "outputs");
 
   if (!fs.existsSync(outputDirPath)) {
@@ -45,3 +45,4 @@ export const executeCpp = async (filePath, inputs) => {
   });
 };
 
+export default executeCpp;
