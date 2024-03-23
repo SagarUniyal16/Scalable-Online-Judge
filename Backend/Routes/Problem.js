@@ -1,27 +1,8 @@
 import {Router} from "express";
 import Problem from "../Models/problem.model.js";
+import testcases from "../Models/testcase.model.js";
 
 const problemRouter=Router();
-
-problemRouter.post("/",async(req,res)=>{
-    const  {problemName,problemStatement,difficultyLevel,solutionCode}=req.body;
-    const problemToAdd=new Problem({
-        Name:problemName,
-        Statement:problemStatement,
-        Difficulty:difficultyLevel,
-        Code:solutionCode,
-    })
-    
-    const response=await problemToAdd.save();
-   
-    if(response.length!=0)
-        res.status(200).json({"msg":"problem added successfully"})
-    else{
-        res.status(400).json({"msg":"Failed to add the problem"})
-    }
-    
-})
-
 problemRouter.get("/",async(req,res)=>{
     try{
         const allProblems=await Problem.find({});
@@ -35,7 +16,6 @@ problemRouter.get("/",async(req,res)=>{
     
     
 })
-
 problemRouter.get("/:id",async(req,res)=>{
     const probId=req.params.id;
     
@@ -56,5 +36,34 @@ problemRouter.get("/:id",async(req,res)=>{
 
   
   })
-  
+
+problemRouter.post("/",async(req,res)=>{
+    const  {problemName,problemStatement,difficultyLevel,solutionCode,testcasesInput,testcasesOutput}=req.body;
+    const problemToAdd=new Problem({
+        Name:problemName,
+        Statement:problemStatement,
+        Difficulty:difficultyLevel,
+        Code:solutionCode,
+       
+    })
+    
+    const response=await problemToAdd.save();
+   
+    const problemId=await response._id;
+
+    const testcaseToAdd=new testcases({
+        problemId:problemId,
+        input:testcasesInput,
+        output:testcasesOutput,
+    })
+    const testcaseResponse=await testcaseToAdd.save();
+   
+    if(response.length!=0 && testcaseResponse.length!=0)
+        res.status(200).json({"msg":"problem added successfully"})
+    else{
+        res.status(400).json({"msg":"Failde to add the problem"})
+    }
+    
+})
+
 export default problemRouter;
