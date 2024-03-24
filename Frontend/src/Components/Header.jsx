@@ -26,14 +26,14 @@ export default function Header() {
           to="/"
           className="no-underline font-bold text-3xl text-white text-decoration-none"
         >
-          Online Judge
+          CodeVerse
         </NavLink>
         <ul className="flex items-center space-x-4">
           <li>
             <NavLink
               to="/"
-              className="hover:text-yellow-400 hover:bg-gray-700 transition duration-300 ease-in-out rounded p-1"
-              activeClassName="text-yellow-400"
+              className="hover:text-yellow-400 transition duration-300 ease-in-out rounded p-1"
+              activeClassName="active"
             >
               Dashboard
             </NavLink>
@@ -41,8 +41,8 @@ export default function Header() {
           <li>
             <NavLink
               to="/problems"
-              className="hover:text-yellow-400 hover:bg-gray-700 transition duration-300 ease-in-out rounded p-1"
-              activeClassName="text-yellow-400"
+              className="hover:text-yellow-400 transition duration-300 ease-in-out rounded p-1"
+              activeClassName="active"
             >
               Problems
             </NavLink>
@@ -77,8 +77,8 @@ export default function Header() {
             <li>
               <NavLink
                 to="/login"
-                className="hover:text-yellow-400 hover:bg-gray-700 transition duration-300 ease-in-out rounded p-1"
-                activeClassName="text-yellow-400"
+                className="hover:text-yellow-400 transition duration-300 ease-in-out rounded p-1"
+                activeClassName="active"
               >
                 Login
               </NavLink>

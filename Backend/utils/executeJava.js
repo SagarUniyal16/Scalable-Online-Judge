@@ -30,7 +30,7 @@ const executeJava = async (filePath, inputs) => {
        
        
         resolve( new Promise(async(resolve,reject)=>{
-           exec(`cd ${javaOutputs}`,async()=>{
+           exec(`cd "${javaOutputs}"`,async()=>{
            
               
               const child = await spawn("java",[fileClassName],{cwd:javaOutputs});
