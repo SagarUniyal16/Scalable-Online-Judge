@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Editor from "react-simple-code-editor";
 import { highlight, languages } from "prismjs/components/prism-core";
@@ -54,6 +54,10 @@ function Playground() {
     });
     setTheOutputDiv(response.data.output);
   };
+
+  useEffect(() => {
+    const response = axios.post("", {});
+  }, []);
 
   return (
     <div className="container mx-auto py-8">

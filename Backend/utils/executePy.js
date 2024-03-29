@@ -24,7 +24,7 @@ const executePy = async (filePath, inputs) => {
       });
 
       pythonProcess.stderr.on("data", (data) => {
-        reject(`Error from Python: ${data.toString()}`);
+        reject(new Error(data));
       });
 
       pythonProcess.on("exit", (code) => {

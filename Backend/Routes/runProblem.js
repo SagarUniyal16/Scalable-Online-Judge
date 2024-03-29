@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import generateFile from "../utils/generateFile.js";
 import executePy from "../utils/executePy.js";
-// import { cleanup } from "../utils/cleanup.js";
+import cleanup from "../utils/cleanup.js";
 import executeCpp from "../utils/executeCpp.js";
 import executeJava from "../utils/executeJava.js";
 import testcases from "../Models/testcase.model.js";
@@ -38,24 +38,22 @@ router.post("/", async (req, res) => {
 
   if (language == "cpp") {
     if (submit) {
-      //if submit button is clicked
+      // if submit button is clicked
       for (let i = 0; i < testcasesArr.length; i++) {
         const inputs = testcasesArr[i];
         const expectedOutput = outputArr[i];
-        console.log(inputs)
-        console.log(expectedOutput)
 
         let output;
 
         try {
           output = await executeCpp(filePath, inputs);
         } catch (err) {
-          // await cleanup();
+          await cleanup();
           return res.status(200).json({ output: err.message });
         }
 
         if (output.trim() !== expectedOutput.trim()) {
-          // await cleanup();
+          await cleanup();
           return res.status(200).json({
             verdict: "failed",
             output: `Failed at testcase no. ${
@@ -66,22 +64,22 @@ router.post("/", async (req, res) => {
           });
         }
       }
-      // await cleanup();
+      await cleanup();
       submitProblem(probId, username, code);
       return res
         .status(200)
-        .json({ verdict: "success", output: "Verdict : Success \nAll the testcases passed" });
+        .json({ verdict: "success", output:"Verdict : success \nAll the testcases passed" });
     } else {
       //if run button is clicked
       let output;
       try {
         output = await executeCpp(filePath, inputs);
       } catch (err) {
-        // await cleanup();
+        await cleanup();
         return res.status(200).json({ output: err.message });
       }
 
-      // await cleanup();
+      await cleanup();
       res.status(200).json({ output });
     }
   } else if (language == "py") {
@@ -112,7 +110,7 @@ router.post("/", async (req, res) => {
       submitProblem(probId, username, code);
       return res
         .status(200)
-        .json({ verdict: "success", output: "Success, All the testcases passed" });
+        .json({ verdict: "success", output: "All the testcases passed" });
     } else {
       let output;
       try {
@@ -133,12 +131,12 @@ router.post("/", async (req, res) => {
         const output = await executeJava(filePath, inputs);
         if (output.startsWith("Error")) {
           const error = output.split("error:")[1];
-          // await cleanup();
+          await cleanup();
           return res.status(200).json({ output: error });
         }
 
         if (output.trim() !== expectedOutput.trim()) {
-          // await cleanup();
+          await cleanup();
           return res.status(200).json({
             verdict: "failed",
             output: `Failed at testcase no. ${
@@ -149,7 +147,7 @@ router.post("/", async (req, res) => {
           });
         }
       }
-      // await cleanup();
+      await cleanup();
       submitProblem(probId, username, code);
       return res
         .status(200)
@@ -158,11 +156,11 @@ router.post("/", async (req, res) => {
       const output = await executeJava(filePath, inputs);
       if (output.startsWith("Error")) {
         const error = output.split("error:")[1];
-        // await cleanup();
+        await cleanup();
 
         return res.status(200).json({ output: error });
       }
-      // await cleanup();
+      await cleanup();
       res.status(200).json({ output });
     }
   }
