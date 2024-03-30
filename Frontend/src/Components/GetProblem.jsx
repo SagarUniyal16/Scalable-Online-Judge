@@ -29,7 +29,7 @@ function GetProblem() {
   const username = useSelector((store) => store.user.userData);
 
   const fetchProblem = async () => {
-    const response = await axios.get(`http://localhost:3002/problem/${problemId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_PORT}problem/${problemId}`);
     const { Difficulty, Name, Statement } = response.data.problemDetails;
 
     setProblemName(Name);
@@ -48,7 +48,7 @@ function GetProblem() {
   }
 
   const getSubmissionHandler = async () => {
-    const response = await axios.post("http://localhost:3002/getsubmission", {
+    const response = await axios.post(`${import.meta.env.VITE_API_PORT}getsubmission`, {
       username,
       problemId,
     });

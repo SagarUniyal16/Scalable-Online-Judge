@@ -34,7 +34,7 @@ function Playground() {
 
   const runClickHandler = async () => {
     setLoadingRun(true); // Start loading indicator for Run
-    const response = await axios.post("http://localhost:3002/problem/run", {
+    const response = await axios.post(`${import.meta.env.VITE_API_PORT}problem/run`, {
       language,
       code,
       submit: false,
@@ -45,7 +45,7 @@ function Playground() {
 
   const submitHandler = async () => {
     setLoadingSubmit(true); // Start loading indicator for Submit
-    const response = await axios.post("http://localhost:3002/problem/run", {
+    const response = await axios.post(`${import.meta.env.VITE_API_PORT}problem/run`, {
       language,
       code,
       probId: problemId,

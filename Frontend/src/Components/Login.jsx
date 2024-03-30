@@ -24,7 +24,7 @@ export default function Login() {
             validationSchema: loginSchema,
             onSubmit: async (values, action) => {
                 try {
-                    const response = await axios.post("http://localhost:3002/login", {
+                    const response = await axios.post(`${import.meta.env.VITE_API_PORT}login`, {
                         values,
                     });
                     console.log(response);

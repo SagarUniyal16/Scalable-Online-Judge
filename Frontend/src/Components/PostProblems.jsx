@@ -12,7 +12,7 @@ const PostProblems = () => {
 
   const clickHandler = async () => {
     try {
-      const response = await axios.post("http://localhost:3002/problem", {
+      const response = await axios.post( `${import.meta.env.VITE_API_PORT}problem`, {
         problemName,
         problemStatement,
         difficultyLevel,
